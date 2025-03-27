@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: fastapi-ml-model
-        image: gcr.io/RecoAI/fastapi-ml-model:latest
+        image: us-docker.pkg.dev/recoai-786/recoai-repo/recoai-fastapi:latest
         ports:
         - containerPort: 80
         livenessProbe:

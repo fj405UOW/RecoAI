@@ -30,7 +30,7 @@ jobs:
       - name: Build Docker image
         working-directory: serving
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/recoai-fastapi:latest .
+          docker build -t us-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/recoai-repo/recoai-fastapi:latest .
 
       - name: Push Docker image to GCR
         run: |
