@@ -23,29 +23,18 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
 
-      - name: Configure Docker for GCR
+      - name: Configure Docker for Artifact Registry
         run: |
-          gcloud auth configure-docker
-
-      # Debug step: List files in the 'serving' directory to ensure Dockerfile is present.
-      - name: List files in serving directory (debug)
-        working-directory: serving
-        run: |
-          ls -la
+          gcloud auth configure-docker us-docker.pkg.dev
 
       - name: Build Docker image
         working-directory: serving
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/recoai-fastapi:latest .
+          docker build -t us-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/my-repo/recoai-fastapi:latest .
 
-      # Debug step: List Docker images to verify the image is built.
-      - name: List Docker images (debug)
+      - name: Push Docker image to Artifact Registry
         run: |
-          docker images
-
-      - name: Push Docker image to GCR
-        run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT }}/recoai-fastapi:latest
+          docker push us-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/my-repo/recoai-fastapi:latest
 
       - name: Get GKE credentials
         run: |
