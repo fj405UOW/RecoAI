@@ -27,10 +27,21 @@ jobs:
         run: |
           gcloud auth configure-docker
 
+      # Debug step: List files in the 'serving' directory to ensure Dockerfile is present.
+      - name: List files in serving directory (debug)
+        working-directory: serving
+        run: |
+          ls -la
+
       - name: Build Docker image
         working-directory: serving
         run: |
-          docker build -t us-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/recoai-repo/recoai-fastapi:latest .
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/recoai-fastapi:latest .
+
+      # Debug step: List Docker images to verify the image is built.
+      - name: List Docker images (debug)
+        run: |
+          docker images
 
       - name: Push Docker image to GCR
         run: |
