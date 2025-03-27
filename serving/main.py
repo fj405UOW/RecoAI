@@ -6,8 +6,19 @@ import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 import joblib
 import os
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+# Configure CORS (adjust the allowed origins as needed)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Use a list of allowed origins in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define model features
 melbourne_features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']
