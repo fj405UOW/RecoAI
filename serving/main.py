@@ -1,36 +1,23 @@
-# serving/main.py
-
+import os
+import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
-import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 import joblib
-import os
-from fastapi.middleware.cors import CORSMiddleware
-
 
 app = FastAPI()
 
-# Configure CORS (adjust the allowed origins as needed)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Use a list of allowed origins in production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Define model features
-melbourne_features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']
-
-# For this example, we are training the model at startup.
-# In a production scenario, you would load a pre-trained model (e.g., from MLflow or a file).
+# Compute the path: move up one directory from 'serving', then into 'data'
 data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "melb_data.csv")
-print(data_path)
+print("Computed data_path:", data_path)  # This will print the computed path
+
+# Now, load the data
 melbourne_data = pd.read_csv(data_path)
+
+melbourne_features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']
+melbourne_model = DecisionTreeRegressor(random_state=1)
 X = melbourne_data[melbourne_features]
 y = melbourne_data["Price"]
-melbourne_model = DecisionTreeRegressor(random_state=1)
 melbourne_model.fit(X, y)
 
 class HouseFeatures(BaseModel):
