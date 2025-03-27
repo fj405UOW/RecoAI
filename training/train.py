@@ -8,7 +8,9 @@ import joblib
 import os
 
 # Path to your training data (change "new_data.csv" if necessary)
-data_path = os.path.join(os.path.dirname(__file__), "melb_data.csv")
+# Compute the path: move up one directory from 'serving', then into 'data'
+data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "melb_data.csv")
+#print("Computed data_path:", data_path)  # This will print the computed path
 data = pd.read_csv(data_path)
 
 # Define features and target

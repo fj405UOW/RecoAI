@@ -7,18 +7,18 @@ import joblib
 
 app = FastAPI()
 
-# Compute the path: move up one directory from 'serving', then into 'data'
-data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "melb_data.csv")
-print("Computed data_path:", data_path)  # This will print the computed path
+# # Compute the path: move up one directory from 'serving', then into 'data'
+# data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "melb_data.csv")
+# #print("Computed data_path:", data_path)  # This will print the computed path
 
-# Now, load the data
-melbourne_data = pd.read_csv(data_path)
+# # Now, load the data
+# melbourne_data = pd.read_csv(data_path)
 
-melbourne_features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']
-melbourne_model = DecisionTreeRegressor(random_state=1)
-X = melbourne_data[melbourne_features]
-y = melbourne_data["Price"]
-melbourne_model.fit(X, y)
+# melbourne_features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']
+# melbourne_model = DecisionTreeRegressor(random_state=1)
+# X = melbourne_data[melbourne_features]
+# y = melbourne_data["Price"]
+# melbourne_model.fit(X, y)
 
 class HouseFeatures(BaseModel):
     Rooms: int
