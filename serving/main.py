@@ -14,7 +14,8 @@ melbourne_features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude'
 
 # For this example, we are training the model at startup.
 # In a production scenario, you would load a pre-trained model (e.g., from MLflow or a file).
-data_path = os.path.join(os.path.dirname(__file__), "data", "melb_data.csv")
+data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "melb_data.csv")
+
 melbourne_data = pd.read_csv(data_path)
 X = melbourne_data[melbourne_features]
 y = melbourne_data["Price"]
