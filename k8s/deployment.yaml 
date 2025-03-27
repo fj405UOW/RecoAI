@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-ml-model
+  labels:
+    app: fastapi-ml-model
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fastapi-ml-model
+  template:
+    metadata:
+      labels:
+        app: fastapi-ml-model
+    spec:
+      containers:
+      - name: fastapi-ml-model
+        image: gcr.io/RecoAI/fastapi-ml-model:latest
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
